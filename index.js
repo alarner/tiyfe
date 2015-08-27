@@ -87,6 +87,11 @@ async.auto({
 		}
 	}],
 	copy: ['update', function(cb) {
-		fs.copy(TEMPLATE, process.cwd(), {clobber: false}, cb)
+		fs.copy(TEMPLATE, process.cwd(), {
+			clobber: false,
+			filter: function(file) {
+				return (file.substr(TEMPLATE.length, 6) !== '/.git/');
+			}
+		}, cb)
 	}]
 });
