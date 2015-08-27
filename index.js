@@ -51,9 +51,7 @@ async.auto({
 				.done(function(commit) {
 					// there was a change, run npm install
 					if(oldCommit !== commit.sha()) {
-						var cmd = 'npm install';
-
-						exec(cmd, {cwd: TEMPLATE}, function(error, stdout, stderr) {
+						exec('npm install', {cwd: TEMPLATE}, function(error, stdout, stderr) {
 							console.log(stdout);
 							console.log(stderr);
 							cb();
@@ -80,7 +78,7 @@ async.auto({
 				}
 			)
 			.done(function() {
-				exec(cmd, {cwd: TEMPLATE}, function(error, stdout, stderr) {
+				exec('npm install', {cwd: TEMPLATE}, function(error, stdout, stderr) {
 					console.log(stdout);
 					console.log(stderr);
 					cb();
