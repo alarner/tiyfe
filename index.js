@@ -79,7 +79,13 @@ async.auto({
 					}
 				}
 			)
-			.done(cb);
+			.done(function() {
+				exec(cmd, {cwd: TEMPLATE}, function(error, stdout, stderr) {
+					console.log(stdout);
+					console.log(stderr);
+					cb();
+				});
+			});
 		}
 	}],
 	copy: ['update', function(cb) {
