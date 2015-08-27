@@ -87,6 +87,6 @@ async.auto({
 		}
 	}],
 	copy: ['update', function(cb) {
-		fs.copy(TEMPLATE, process.cwd(), cb)
+		fs.copy(TEMPLATE, process.cwd(), {clobber: false}, cb)
 	}]
 });
