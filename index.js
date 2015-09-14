@@ -92,7 +92,6 @@ async.auto({
 		fs.copy(TEMPLATE, process.cwd(), {
 			clobber: false,
 			filter: function(file) {
-				console.log(file);
 				return (file.substr(TEMPLATE.length, 6) !== '/.git/' && file.substr(TEMPLATE.length) !== '/.git');
 			}
 		}, cb)
