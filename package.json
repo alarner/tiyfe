@@ -6,12 +6,8 @@
   "dependencies": {
     "async": "^1.4.2",
     "fs-extra": "^0.23.1",
-    "minimist": "^1.2.0",
     "nodegit": "^0.4.1",
     "npm": "^2.14.0"
-  },
-  "devDependencies": {
-    "minimist": "^1.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

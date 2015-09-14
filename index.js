@@ -7,9 +7,9 @@ var npm = require('npm');
 var exec = require('child_process').exec;
 
 var HOME = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-var TEMPLATE = path.join(HOME, '.tiyfe', 'tiyfe-template');
 var GIT = path.join(process.cwd(), '.git');
-var hasGit = false;
+var full = process.argv.length > 2 && process.argv[2].toLowerCase() === 'full';
+var TEMPLATE = path.join(HOME, '.tiyfe', full ? 'tiyfe-template' : 'tiyfe-slim-template');
 
 async.auto({
 	// Create directory if it doesn't exit
@@ -67,7 +67,7 @@ async.auto({
 		}
 		catch (e) {
 			nodegit.Clone(
-				"https://github.com/alarner/tiyfe-template.git",
+				'https://github.com/alarner/'+(full ? 'tiyfe-template' : 'tiyfe-slim-template')+'.git',
 				TEMPLATE,
 				{
 					remoteCallbacks: {
@@ -89,26 +89,12 @@ async.auto({
 		}
 	}],
 	copy: ['update', function(cb) {
-		try {
-			var stats = fs.lstatSync(GIT);
-			hasGit = stats.isDirectory();
-		}
-		catch(e) {
-			hasGit = false;
-		}
 		fs.copy(TEMPLATE, process.cwd(), {
 			clobber: false,
 			filter: function(file) {
-				return (file.substr(TEMPLATE.length, 6) !== '/.git/');
+				console.log(file);
+				return (file.substr(TEMPLATE.length, 6) !== '/.git/' && file.substr(TEMPLATE.length) !== '/.git');
 			}
 		}, cb)
-	}],
-	removeGit: ['copy', function(cb) {
-		// Don't delete the git repo if it wasn't one that we created
-		if(hasGit) {
-			return cb();
-		}
-
-		fs.remove(GIT, cb);
 	}]
 });
